@@ -7,6 +7,7 @@ type StateVideoPageItem = {
 }
 
 function VideoPageItem({video}: StateVideoPageItem) {
+  console.log(video);
   return(
     <div className="mx-auto my-4 grid grid-cols-2">
       <div className="items-center">
@@ -33,7 +34,7 @@ function VideoPageItem({video}: StateVideoPageItem) {
           <div className="flex pb-4">
             <h3 className="">Character: </h3>
             <div className="px-4">
-              {video.used.map((number) => <h3>{number.character.name} ({number.engine.name})</h3>)}
+              {video.used.map((number, index) => <h3 key={index}>{number.character.name} ({number.engine.name})</h3>)}
             </div>
           </div>
           <div className="flex">

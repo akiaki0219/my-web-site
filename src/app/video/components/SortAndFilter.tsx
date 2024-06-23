@@ -99,7 +99,7 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
         <fieldset className="py-2">
           <legend>Filter by Type</legend>
           {videoType.map((name) =>
-            <div className="px-4">
+            <div key={name} className="px-4">
               <input type="checkbox" id={name} name={name} checked={filterType.includes(name)} onChange={() => handleFilterTypeChange(name)} />
               <label className="px-2" htmlFor={name}>{name}</label>
             </div>
@@ -108,7 +108,7 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
         <fieldset className="py-2">
           <legend>Filter by Character</legend>
           {character.map((name) =>
-            <div className="px-4">
+            <div key={name} className="px-4">
               <input type="checkbox" id={name} name={name} checked={filterCharacter.includes(name)} onChange={() => handleFilterCharacterChange(name)} />
               <label className="px-2" htmlFor={name}>{name}</label>
             </div>
@@ -117,7 +117,7 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
         <fieldset className="py-2">
           <legend>Filter by Engine</legend>
           {engine.map((name) =>
-            <div className="px-4">
+            <div key={name} className="px-4">
               <input type="checkbox" id={name} name={name} checked={filterEngine.includes(name)} onChange={() => handleFilterEngineChange(name)} />
               <label className="px-2" htmlFor={name}>{name}</label>
             </div>
