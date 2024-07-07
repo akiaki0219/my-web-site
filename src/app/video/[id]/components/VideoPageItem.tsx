@@ -7,21 +7,20 @@ type StateVideoPageItem = {
 }
 
 function VideoPageItem({video}: StateVideoPageItem) {
-  console.log(video);
   return(
     <div className="mx-auto my-4 grid grid-cols-2">
       <div className="items-center">
         {(() => {
           if (video.YouTube) {
             return (
-              <div className="py-4">
+              <div className="py-4 w-4/5">
                 <YouTubePlayer YouTube={video.YouTube} key={video.id}/>
               </div>
             );}})()}
         {(() => {
           if (video.niconico) {
             return (
-              <div className="py-4">
+              <div className="py-4 w-4/5">
                 <NicoVideoPlayer niconico={video.niconico} key={video.id}/>
               </div>
             );}})()}

@@ -38,15 +38,13 @@ function TopVideo() {
     <div className="">
       <h5 className="text-xl text-center">Top Video (based on YouTube data)</h5>
       {!isLoaded && <p>Now Loading...</p>}
-      <div className="my-2">
-        <iframe
+      <div className="my-2 aspect-w-16 aspect-h-9">
+        <iframe className=""
           id="player"
           title="TopVideo"
-          width={640}
-          height={360}
           src={"https://www.youtube.com/embed/"+videoId}
           allowFullScreen
-        />       
+        />
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ function VideoItem({video}: StateVideoItem) {
   return (
     <div className="border w-3/4 mx-auto mb-4 rounded border-slate-500">
       <div className="grid md:grid-cols-2 justify-items-center">
-        <div className="py-4">
+        <div className="w-full h-full">
           {video.YouTube? (
           <YouTubePlayer YouTube={video.YouTube} key={video.id} />
         ) : (

@@ -8,10 +8,10 @@ function Video() {
     <div>
       <h4 className="text-2xl font-medium text-center pb-2">Recommended Videos</h4>
       <div className="grid grid-cols-2 mx-auto justify-items-center">
-        <div className="py-2">
+        <div className="py-2 w-4/5">
           <LatestVideo />
         </div>
-        <div className="py-2">
+        <div className="py-2 w-4/5">
           <TopVideo />
         </div>
       </div>

@@ -26,18 +26,14 @@ function LatestVideo() {
       <h5 className="text-xl text-center">Latest Video</h5>
       {!isLoaded && <p>Now Loading...</p>}
       {latestVideo &&
-        <div className="my-2">
-          <iframe
-            id="player"
-            title="LatestVideo"
-            width={640}
-            height={360}
-            src={latestVideo.YouTube 
-              ? `https://www.youtube.com/embed/${latestVideo.YouTube}`
-              : `https://embed.nicovideo.jp/watch/sm${latestVideo.niconico}`}
-            allowFullScreen
-          />
-        </div>
+      <div className="my-2 aspect-w-16 aspect-h-9">
+        <iframe className=""
+          id="player"
+          title="LatestVideo"
+          src={latestVideo.YouTube ? `https://www.youtube.com/embed/${latestVideo.YouTube}` : `https://embed.nicovideo.jp/watch/sm${latestVideo.niconico}`}
+          allowFullScreen
+        />
+      </div>
       }
     </div>
   );
