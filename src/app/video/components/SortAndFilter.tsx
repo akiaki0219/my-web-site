@@ -4,7 +4,7 @@ import React, {useState, useEffect} from 'react';
 import {fetchVideoTypeArray, fetchCharacterArray, fetchEngineArray} from 'utils/fetchVideoFilter';
 
 interface SortandFilterProps {
-  applySortFilter: (order: 'latest' | 'oldest', filterType: string[], filterCharacter: string[], filterEngine: string[]) => void;
+  applySortFilter: (order: 'latest'|'oldest', filterType: string[], filterCharacter: string[], filterEngine: string[]) => void;
 }
 
 const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {

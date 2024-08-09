@@ -37,7 +37,6 @@ function Video() {
       NewVideoList = NewVideoList.filter(video => filterType.includes(video.type.name));
       NewVideoList = NewVideoList.filter(video => video.used.some(use => filterCharacter.includes(use.character.name)));
       NewVideoList = NewVideoList.filter(video => video.used.some(use => filterEngine.includes(use.engine.name)));
-      console.log('Video list:', NewVideoList);
       setVideoList(NewVideoList);
       setIsLoaded(true);
     }

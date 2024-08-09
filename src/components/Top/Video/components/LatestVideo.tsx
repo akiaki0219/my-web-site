@@ -13,7 +13,6 @@ function LatestVideo() {
       const fetchVideo = await fetchLatestVideo();
       if (fetchVideo) {
         const latestVideo = fetchVideo as unknown as LatestVideoObject;
-        console.log(latestVideo);
         setLatestVideo(latestVideo);
         setIsLoaded(true);
       }
