@@ -6,8 +6,10 @@ export async function fetchLatestVideo(): Promise<LatestVideoObject | null> {
     const {data, error} = await supabase
       .from('video')
       .select('id, YouTube, niconico')
+      .eq('public', true)
       .order('id', {ascending: false})
-      .lte('posted_at', new Date().toISOString());
+      .lt('posted_at', new Date().toISOString())
+      .limit(1);
     if (error) {
       console.error('Error fetching video list', error);
       return null;
@@ -24,8 +26,9 @@ export async function fetchLatestAllVideoList(): Promise<fetchVideoObject[] | nu
     const {data, error} = await supabase
       .from('video')
       .select('id, YouTube, niconico, title, posted_at, number, type(name), used(character(name), engine(name))')
+      .eq('public', true)
       .order('id', {ascending: false})
-      .lte('posted_at', new Date().toISOString());
+      .lt('posted_at', new Date().toISOString());
     if (error) {
       console.error('Error fetching video list', error);
       return null;
@@ -42,8 +45,9 @@ export async function fetchOldestAllVideoList(): Promise<fetchVideoObject[] | nu
     const {data, error} = await supabase
       .from('video')
       .select('id, YouTube, niconico, title, posted_at, number, type(name), used(character(name), engine(name))')
+      .eq('public', true)
       .order('id', {ascending: true})
-      .lte('posted_at', new Date().toISOString());
+      .lt('posted_at', new Date().toISOString());
     if (error) {
       console.error('Error fetching video list', error);
       return null;

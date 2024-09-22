@@ -23,6 +23,7 @@ export async function fetchCharacterArray(): Promise<Character[] | null> {
     const {data, error} = await supabase
       .from('character')
       .select('id, name')
+      .neq('id', 3).neq('id', 7)
       .order('name', {ascending: true});
     if (error) {
       console.error('Error fetching video list', error);

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, {useState, useEffect} from 'react';
 import {fetchVideoTypeArray, fetchCharacterArray, fetchEngineArray} from 'utils/fetchVideoFilter';
@@ -9,33 +9,39 @@ interface SortandFilterProps {
 
 const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
   const [order, setOrder] = useState<'latest' | 'oldest'>('latest');
-  const [videoType, setVideoType] = useState<string[]>([]);
-  const [character, setCharacter] = useState<string[]>([]);
-  const [engine, setEngine] = useState<string[]>([]);
-  const [filterType, setFilterType] = useState<string[]>([]);
+  const [videoType, setVideoType] = useState<'all' | 'custom'>('all');
+  const [allVideoType, setAllVideoType] = useState<string[]>([]);
+  const [filterVideoType, setFilterVideoType] = useState<string[]>([]);
+  const [choosedVideoType, setChoosedVideoType] = useState<string[]>([]);
+  const [character, setCharacter] = useState<'all' | 'custom'>('all');
+  const [allCharacter, setAllCharacter] = useState<string[]>([]);
   const [filterCharacter, setFilterCharacter] = useState<string[]>([]);
+  const [choosedCharacter, setChoosedCharacter] = useState<string[]>([]);
+  const [engine, setEngine] = useState<'all' | 'custom'>('all');
+  const [allEngine, setAllEngine] = useState<string[]>([]);
   const [filterEngine, setFilterEngine] = useState<string[]>([]);
+  const [choosedEngine, setChoosedEngine] = useState<string[]>([]);
   
   useEffect(() => {
     const fetchType = async () => {
       const fetchVideoTypeSet = await fetchVideoTypeArray();
       if (fetchVideoTypeSet) {
         const typeList = fetchVideoTypeSet.map((newType) => newType.name);
-        setVideoType(typeList);
+        setAllVideoType(typeList);
       }
     };
     const fetchCharacter = async () => {
       const fetchCharacterSet = await fetchCharacterArray();
       if (fetchCharacterSet) {
         const characterList = fetchCharacterSet.map((newCharacter) => newCharacter.name);
-        setCharacter(characterList);
+        setAllCharacter(characterList);
       }
     };
     const fetchEngine = async () => {
       const fetchEngineSet = await fetchEngineArray();
       if (fetchEngineSet) {
         const engineList = fetchEngineSet.map((newEngine) => newEngine.name);
-        setEngine(engineList);
+        setAllEngine(engineList);
       }
     };
     fetchType();
@@ -43,40 +49,67 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
     fetchEngine();
   }, []);
   useEffect(() => {
-    if (videoType) {
-      setFilterType(videoType);
+    if (allVideoType) {
+      setFilterVideoType(allVideoType);
+      setChoosedVideoType(allVideoType);
     }
-    if (character) {
-      setFilterCharacter(character);
+    if (allCharacter) {
+      setFilterCharacter(allCharacter);
+      setChoosedCharacter(allCharacter);
     }
-    if (engine) {
-      setFilterEngine(engine);
+    if (allEngine) {
+      setFilterEngine(allEngine);
+      setChoosedEngine(allEngine);
     }
-  }, [videoType, character, engine]);
+  }, [allVideoType, allCharacter, allEngine]);
   
-  const handleFilterTypeChange = (type: string) => {
-    const updatedFilterType = 
-      filterType.includes(type)
-        ? filterType.filter(item => item !== type)
-        : [...filterType, type];
-    setFilterType(updatedFilterType);
+  const VideoTypeChange = (how: string) => {
+    if (how === 'all') {
+      setVideoType('all');
+      setFilterVideoType(allVideoType);
+    }
+    else if (how === 'custom') {
+      setVideoType('custom');
+      setFilterVideoType(choosedVideoType);
+    }
+  }
+  const handleFilterVideoTypeChange = (type: string) => {
+    const updatedFilterVideoType = filterVideoType.includes(type) ? filterVideoType.filter(item => item !== type) : [...filterVideoType, type];
+    setChoosedVideoType(updatedFilterVideoType);
+    setFilterVideoType(updatedFilterVideoType);
   };
+  const CharacterChange = (how: string) => {
+    if (how === 'all') {
+      setCharacter('all');
+      setFilterCharacter(allCharacter);
+    }
+    else if (how === 'custom') {
+      setCharacter('custom');
+      setFilterCharacter(choosedCharacter);
+    }
+  }
   const handleFilterCharacterChange = (name: string) => {
-    const updatedFilterCharacter = 
-      filterCharacter.includes(name)
-        ? filterCharacter.filter(item => item !== name)
-        : [...filterCharacter, name];
+    const updatedFilterCharacter = filterCharacter.includes(name) ? filterCharacter.filter(item => item !== name) : [...filterCharacter, name];
+    setChoosedCharacter(updatedFilterCharacter);
     setFilterCharacter(updatedFilterCharacter);
   };
+  const EngineChange = (how: string) => {
+    if (how === 'all') {
+      setEngine('all');
+      setFilterEngine(allEngine);
+    }
+    else if (how === 'custom') {
+      setEngine('custom');
+      setFilterEngine(choosedEngine);
+    }
+  }
   const handleFilterEngineChange = (name: string) => {
-    const updatedFilterEngine = 
-      filterEngine.includes(name)
-        ? filterEngine.filter(item => item !== name)
-        : [...filterEngine, name];
+    const updatedFilterEngine = filterEngine.includes(name) ? filterEngine.filter(item => item !== name) : [...filterEngine, name];
+    setChoosedEngine(updatedFilterEngine);
     setFilterEngine(updatedFilterEngine);
   };
   const handleApply = () => {
-    applySortFilter(order, filterType, filterCharacter, filterEngine);
+    applySortFilter(order, filterVideoType, filterCharacter, filterEngine);
   };
 
   return (
@@ -97,31 +130,55 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
           </div>
         </fieldset>
         <fieldset className="py-2">
-          <legend>Filter by Type</legend>
-          {videoType.map((name) =>
+          <legend>Filter by Video Type</legend>
+          <div className="px-4">
+            <input type="radio" id="all-video-type" name="video-type" value="All" checked={videoType==='all'} onChange={() => VideoTypeChange('all')} />
+            <label className="px-2" htmlFor="all-video-type">All</label>
+          </div>
+          <div className="px-4">
+            <input type="radio" id="custom-video-type" name="video-type" value="Custom" checked={videoType==='custom'} onChange={() => VideoTypeChange('custom')} />
+            <label className="px-2" htmlFor="custom-video-type">Custom</label>
+            {allVideoType.map((name) =>
             <div key={name} className="px-4">
-              <input type="checkbox" id={name} name={name} checked={filterType.includes(name)} onChange={() => handleFilterTypeChange(name)} />
+              <input type="checkbox" id={name} name={name} checked={choosedVideoType.includes(name)} disabled={videoType==='all'} onChange={() => handleFilterVideoTypeChange(name)} />
               <label className="px-2" htmlFor={name}>{name}</label>
             </div>
-          )}
+            )}
+          </div>
         </fieldset>
         <fieldset className="py-2">
           <legend>Filter by Character</legend>
-          {character.map((name) =>
+          <div className="px-4">
+            <input type="radio" id="all-character" name="character" value="All" checked={character==='all'} onChange={() => CharacterChange('all')} />
+            <label className="px-2" htmlFor="all-character">All</label>
+          </div>
+          <div className="px-4">
+            <input type="radio" id="custom-character" name="character" value="Custom" checked={character==='custom'} onChange={() => CharacterChange('custom')} />
+            <label className="px-2" htmlFor="custom-type">Custom</label>
+            {allCharacter.map((name) =>
             <div key={name} className="px-4">
-              <input type="checkbox" id={name} name={name} checked={filterCharacter.includes(name)} onChange={() => handleFilterCharacterChange(name)} />
+              <input type="checkbox" id={name} name={name} checked={choosedCharacter.includes(name)} disabled={character=='all'} onChange={() => handleFilterCharacterChange(name)} />
               <label className="px-2" htmlFor={name}>{name}</label>
             </div>
-          )}
+            )}
+          </div>
         </fieldset>
         <fieldset className="py-2">
           <legend>Filter by Engine</legend>
-          {engine.map((name) =>
+          <div className="px-4">
+            <input type="radio" id="all-engine" name="engine" value="All" checked={engine==='all'} onChange={() => EngineChange('all')} />
+            <label className="px-2" htmlFor="all-engine">All</label>
+          </div>
+          <div className="px-4">
+            <input type="radio" id="custom-engine" name="engine" value="Custom" checked={engine==='custom'} onChange={() => EngineChange('custom')} />
+            <label className="px-2" htmlFor="custom-type">Custom</label>
+            {allEngine.map((name) =>
             <div key={name} className="px-4">
-              <input type="checkbox" id={name} name={name} checked={filterEngine.includes(name)} onChange={() => handleFilterEngineChange(name)} />
+              <input type="checkbox" id={name} name={name} checked={choosedEngine.includes(name)} disabled={engine=='all'} onChange={() => handleFilterEngineChange(name)} />
               <label className="px-2" htmlFor={name}>{name}</label>
             </div>
-          )}
+            )}
+          </div>
         </fieldset>
       </div>
       <div className="grid mx-auto justify-items-center">

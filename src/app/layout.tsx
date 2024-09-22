@@ -1,6 +1,6 @@
-import type {Metadata} from "next";
-import {Inter} from "next/font/google";
-import "./globals.css";
+import type {Metadata} from 'next';
+import {Inter} from 'next/font/google';
+import './globals.css';
 import Header from '@/components/App/Header'
 import Footer from '@/components/App/Footer';
 
@@ -11,11 +11,7 @@ export const metadata: Metadata = {
   description: "Akkiy's web site",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
   return (
     <html lang="ja">
       <body className={inter.className}>
@@ -30,3 +26,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export default RootLayout;

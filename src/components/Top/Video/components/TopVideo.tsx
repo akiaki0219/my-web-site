@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, {useState, useEffect} from "react";
 
@@ -15,23 +15,20 @@ function TopVideo() {
       channelId: "UCG6CzweaohMczHNS5tfI4UA",
       order: "viewCount",
       type: "video",
-      maxResults: "1",
+      maxResults: "10",
     };
     const queryParams = new URLSearchParams(params);
 
     fetch(YOUTUBE_SEARCH_API_URL + queryParams)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (result.items && result.items.length !== 0) {
-            setVideoId(result.items[0].id.videoId);
-            setIsLoaded(true);
-          }
-        })
-      .catch(
-        (error) => {
-          console.error(error);
-        });
+      .then((result) => result.json())
+      .then((result) => {
+        if (result.items && result.items.length !== 0) {
+          console.log(result);
+          setVideoId(result.items[0].id.videoId);
+          setIsLoaded(true);
+        }
+      })
+      .catch((error) => {console.error(error);});
   }, []);
 
   return (

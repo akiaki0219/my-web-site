@@ -23,6 +23,7 @@ function AppHeader() {
             <Link className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="/">Top</Link>
             <Link className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="/video">Video</Link>
             <Link className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="/blog">Blog</Link>
+            <Link className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="/contact">Contact</Link>
             <button className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" onClick={toggleDropdownB}>Link</button>
           </div>
           <div>
@@ -34,10 +35,10 @@ function AppHeader() {
           </div>
         </div>
         <div className={`${isOpenB ? 'md:flex' : 'hidden'} bg-zinc-300 justify-center hidden`}>
-          <a className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="https://x.com/akiaki02_19">X (Twitter)</a>
-          <a className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="http://www.youtube.com/@akiaki02_19">YouTube</a>
-          <a className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="https://www.nicovideo.jp/user/130487990">niconico</a>
-          <a className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="https://note.com/akiaki02_19">note</a>
+          <a className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="https://x.com/akiaki02_19" target="_blank">X (Twitter)</a>
+          <a className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="http://www.youtube.com/@akiaki02_19" target="_blank">YouTube</a>
+          <a className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="https://www.nicovideo.jp/user/130487990" target="_blank">niconico</a>
+          <a className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="https://note.com/akiaki02_19" target="_blank">note</a>
         </div>
         <div className={`${isOpenA ? 'block' : 'hidden'} left-0 w-full bg-zinc-300 md:hidden`}>
           <ul>
@@ -50,22 +51,25 @@ function AppHeader() {
             <li className="border-b">
               <Link className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="/blog">Blog</Link>
             </li>
+            <li className="border-b">
+            <Link className="block px-8 py-2 my-1 hover:bg-gray-600 rounded" href="/contact">Contact</Link>
+            </li>
             <li className="hover:bg-gray-600 rounded">
               <button className="block px-8 py-2 my-1" onClick={toggleDropdownB}>Link</button>
             </li>
             <div className={`${isOpenB ? 'block' : 'hidden'} left-0 w-full bg-zinc-300`}>
               <ul>
                 <li className="border-y">
-                  <a className="block px-12 py-2 my-1 hover:bg-gray-600 rounded" href="https://x.com/akiaki02_19">X (Twitter)</a>
+                  <a className="block px-12 py-2 my-1 hover:bg-gray-600 rounded" href="https://x.com/akiaki02_19" target="_blank">X (Twitter)</a>
                 </li>
                 <li className="border-b">
-                  <a className="block px-12 py-2 my-1 hover:bg-gray-600 rounded" href="http://www.youtube.com/@akiaki02_19">YouTube</a>
+                  <a className="block px-12 py-2 my-1 hover:bg-gray-600 rounded" href="http://www.youtube.com/@akiaki02_19" target="_blank">YouTube</a>
                 </li>
                 <li className="border-b">
-                  <a className="block px-12 py-2 my-1 hover:bg-gray-600 rounded" href="https://www.nicovideo.jp/user/130487990">niconico</a>
+                  <a className="block px-12 py-2 my-1 hover:bg-gray-600 rounded" href="https://www.nicovideo.jp/user/130487990" target="_blank">niconico</a>
                 </li>
                 <li>
-                  <a className="block px-12 py-2 my-1 hover:bg-gray-600 rounded" href="https://note.com/akiaki02_19">note</a>
+                  <a className="block px-12 py-2 my-1 hover:bg-gray-600 rounded" href="https://note.com/akiaki02_19" target="_blank">note</a>
                 </li>
               </ul>
             </div>

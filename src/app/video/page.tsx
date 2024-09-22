@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {fetchLatestAllVideoList, fetchOldestAllVideoList} from 'utils/fetchVideo';
 import {VideoObject} from 'utils/types';
@@ -48,7 +48,7 @@ function Video() {
       <SortandFilter applySortFilter={applySortFilter} />
       {!isLoaded && <p>Now Loading...</p>}
       {videoList.length===0
-        ? <div className="">
+        ? <div className="w-3/4 text-center mx-auto mb-4">
             <h2>There is No Video</h2>
             <br/>
             <h5>Please try agein after Changing search parameters.</h5>

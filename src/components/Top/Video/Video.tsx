@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import LatestVideo from "./components/LatestVideo";
+import LatestVideo from './components/LatestVideo';
 import TopVideo from './components/TopVideo';
 
 function Video() {

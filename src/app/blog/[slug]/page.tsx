@@ -38,4 +38,4 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
   )
 }
 
-export default PostLayout
+export default PostLayout;

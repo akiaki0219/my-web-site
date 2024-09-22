@@ -17,15 +17,18 @@ function PostCard(post: Post) {
   )
 }
 
-export default function Home() {
+function Home() {
   const posts = allPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
   return (
-    <div className="mx-auto max-w-xl">
-      <h1 className="text-4xl text-center py-4">Blog List</h1>
-      {posts.map((post, idx) => (
-        <PostCard key={idx} {...post} />
-      ))}
+    <div className="mx-auto max-w-xl text-center">
+      <h1 className="text-4xl py-4">Blog List</h1>
+      <div>
+        {posts.map((post, idx) => (<PostCard key={idx} {...post} />))}        
+      </div>
+
     </div>
   )
 }
+
+export default Home;

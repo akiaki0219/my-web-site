@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {fetchLatestVideo} from 'utils/fetchVideo';
 import {LatestVideoObject} from 'utils/types';
