@@ -1,11 +1,13 @@
 import {NextRequest, NextResponse} from 'next/server';
 import nodemailer from 'nodemailer';
 
+const from = process.env.NEXT_PUBLIC_FROM_EMAIL_ADDRESS as string;
 const user = process.env.NEXT_PUBLIC_EMAIL_ADDRESS as string;
 const pass = process.env.NEXT_PUBLIC_EMAIL_PASSWORD as string;
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
+  body.body = body.body.replace("&", "&amp").replace("<", "&lt").replace(">", "&gt");
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -17,7 +19,7 @@ export async function POST(req: NextRequest) {
   });
 
   const toHostMailData = {
-    from: body.email,
+    from: from,
     to: user,
     subject: body.subject,
     text: body.body,
@@ -26,10 +28,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const info = await transporter.sendMail(toHostMailData);
-    console.log('Email sent: ', info.response);
     return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
   } catch (error) {
-    console.error('Error sending email: ', error);
     return NextResponse.json({ message: 'Error sending email' }, { status: 500 });
   }
 }
