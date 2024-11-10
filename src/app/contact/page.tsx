@@ -19,7 +19,7 @@ function Contact() {
     };
 
     try {
-      const res = await fetch("../api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain", "Content-Type": "application/json",
