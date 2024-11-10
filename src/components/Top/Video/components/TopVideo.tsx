@@ -23,7 +23,6 @@ function TopVideo() {
       .then((result) => result.json())
       .then((result) => {
         if (result.items && result.items.length !== 0) {
-          console.log(result);
           setVideoId(result.items[0].id.videoId);
           setIsLoaded(true);
         }

@@ -7,7 +7,6 @@ const pass = process.env.NEXT_PUBLIC_EMAIL_PASSWORD as string;
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  body.body = body.body.replace("&", "&amp").replace("<", "&lt").replace(">", "&gt");
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
