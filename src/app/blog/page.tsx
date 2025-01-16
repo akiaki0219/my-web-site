@@ -17,7 +17,7 @@ function PostCard(post: Post) {
   )
 }
 
-function Home() {
+function Blog() {
   const posts = allPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
   return (
@@ -26,9 +26,8 @@ function Home() {
       <div>
         {posts.map((post, idx) => (<PostCard key={idx} {...post} />))}        
       </div>
-
     </div>
   )
 }
 
-export default Home;
+export default Blog;

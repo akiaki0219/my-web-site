@@ -20,7 +20,7 @@ function VideoItem({video}: StateVideoItem) {
         </div>
         <div className="content-center">
           <h2 className="text-xl">{video.title}</h2>
-          <h5 className="px-8 pt-1 pb-2">Type: {video.type.name}</h5>
+          <h5 className="px-8 pt-1 pb-2">Date: {video.posted_at.toString()}</h5>
           {video.YouTube &&
             <div className="px-8 pb-2">
               <button className="px-2 py-2 bg-red-500 text-white rounded">

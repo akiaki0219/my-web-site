@@ -6,7 +6,7 @@ function Profile() {
         <h5>ボイロ実況、ボカロカバー投稿者</h5>
       </div>
       <div className="text-center py-2">
-        <h4 className="text-2xl font-medium">history</h4>
+        <h4 className="text-2xl font-medium">History</h4>
         <div className="flex justify-center py-1">
           <table className="w-1/2 table-fixed text-center border-separate border-spacing-x-4">
             <thead>
@@ -23,6 +23,10 @@ function Profile() {
             <tr>
               <td>2024/7/1</td>
               <td>Webサイト公開</td>
+            </tr>
+            <tr>
+              <td>2025/1/3</td>
+              <td>自作ゲーム第一弾公開</td>
             </tr>
             </tbody>
           </table>          

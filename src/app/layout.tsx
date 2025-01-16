@@ -4,7 +4,7 @@ import './globals.css';
 import Header from '@/components/App/Header'
 import Footer from '@/components/App/Footer';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "My web site",

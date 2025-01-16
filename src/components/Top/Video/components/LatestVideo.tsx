@@ -10,11 +10,12 @@ function LatestVideo() {
 
   useEffect(() => {
     const fetchVideo = async () => {
+      setIsLoaded(true);
       const fetchVideo = await fetchLatestVideo();
       if (fetchVideo) {
         const latestVideo = fetchVideo as unknown as LatestVideoObject;
         setLatestVideo(latestVideo);
-        setIsLoaded(true);
+        setIsLoaded(false);
       }
     };
     fetchVideo();
@@ -23,7 +24,7 @@ function LatestVideo() {
   return (
     <div className="">
       <h5 className="text-xl text-center">Latest Video</h5>
-      {!isLoaded && <p>Now Loading...</p>}
+      {isLoaded && <p className="text-center">Now Loading...</p>}
       {latestVideo &&
       <div className="my-2 aspect-w-16 aspect-h-9">
         <iframe className=""

@@ -21,6 +21,12 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
   const [allEngine, setAllEngine] = useState<string[]>([]);
   const [filterEngine, setFilterEngine] = useState<string[]>([]);
   const [choosedEngine, setChoosedEngine] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [buttonText, setButtonText] = useState<'Open' | 'Close'>('Open');
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+    isOpen ? setButtonText('Open') : setButtonText('Close');
+  };
   
   useEffect(() => {
     const fetchType = async () => {
@@ -117,72 +123,77 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
       <div className="text-2xl text-center py-4">
         <h5>Sort & Filter Video List</h5>
       </div>
-      <div className="grid md:w-4/5 mx-auto grid-cols-2 md:grid-cols-4 justify-items-center">
-        <fieldset className="py-2">
-          <legend>Sort by Date</legend>
-          <div className="px-4">
-            <input type="radio" id="latest" name="sort" value="Latest" checked={order==='latest'} onChange={() => setOrder('latest')} />
-            <label className="px-2" htmlFor="latest">Latest</label>
-          </div>
-          <div className="px-4">
-            <input type="radio" id="oldest" name="sort" value="Oldest" checked={order==='oldest'} onChange={() => setOrder('oldest')} />
-            <label className="px-2" htmlFor="oldest">Oldest</label>
-          </div>
-        </fieldset>
-        <fieldset className="py-2">
-          <legend>Filter by Video Type</legend>
-          <div className="px-4">
-            <input type="radio" id="all-video-type" name="video-type" value="All" checked={videoType==='all'} onChange={() => VideoTypeChange('all')} />
-            <label className="px-2" htmlFor="all-video-type">All</label>
-          </div>
-          <div className="px-4">
-            <input type="radio" id="custom-video-type" name="video-type" value="Custom" checked={videoType==='custom'} onChange={() => VideoTypeChange('custom')} />
-            <label className="px-2" htmlFor="custom-video-type">Custom</label>
-            {allVideoType.map((name) =>
-            <div key={name} className="px-4">
-              <input type="checkbox" id={name} name={name} checked={choosedVideoType.includes(name)} disabled={videoType==='all'} onChange={() => handleFilterVideoTypeChange(name)} />
-              <label className="px-2" htmlFor={name}>{name}</label>
+      <div className={`${isOpen ? 'md:block' : 'hidden'}`}>
+        <div className="grid md:w-4/5 mx-auto grid-cols-2 md:grid-cols-4 justify-items-center">
+          <fieldset className="py-2">
+            <legend>Sort by Date</legend>
+            <div className="px-4">
+              <input type="radio" id="latest" name="sort" value="Latest" checked={order==='latest'} onChange={() => setOrder('latest')} />
+              <label className="px-2" htmlFor="latest">Latest</label>
             </div>
-            )}
-          </div>
-        </fieldset>
-        <fieldset className="py-2">
-          <legend>Filter by Character</legend>
-          <div className="px-4">
-            <input type="radio" id="all-character" name="character" value="All" checked={character==='all'} onChange={() => CharacterChange('all')} />
-            <label className="px-2" htmlFor="all-character">All</label>
-          </div>
-          <div className="px-4">
-            <input type="radio" id="custom-character" name="character" value="Custom" checked={character==='custom'} onChange={() => CharacterChange('custom')} />
-            <label className="px-2" htmlFor="custom-type">Custom</label>
-            {allCharacter.map((name) =>
-            <div key={name} className="px-4">
-              <input type="checkbox" id={name} name={name} checked={choosedCharacter.includes(name)} disabled={character=='all'} onChange={() => handleFilterCharacterChange(name)} />
-              <label className="px-2" htmlFor={name}>{name}</label>
+            <div className="px-4">
+              <input type="radio" id="oldest" name="sort" value="Oldest" checked={order==='oldest'} onChange={() => setOrder('oldest')} />
+              <label className="px-2" htmlFor="oldest">Oldest</label>
             </div>
-            )}
-          </div>
-        </fieldset>
-        <fieldset className="py-2">
-          <legend>Filter by Engine</legend>
-          <div className="px-4">
-            <input type="radio" id="all-engine" name="engine" value="All" checked={engine==='all'} onChange={() => EngineChange('all')} />
-            <label className="px-2" htmlFor="all-engine">All</label>
-          </div>
-          <div className="px-4">
-            <input type="radio" id="custom-engine" name="engine" value="Custom" checked={engine==='custom'} onChange={() => EngineChange('custom')} />
-            <label className="px-2" htmlFor="custom-type">Custom</label>
-            {allEngine.map((name) =>
-            <div key={name} className="px-4">
-              <input type="checkbox" id={name} name={name} checked={choosedEngine.includes(name)} disabled={engine=='all'} onChange={() => handleFilterEngineChange(name)} />
-              <label className="px-2" htmlFor={name}>{name}</label>
+          </fieldset>
+          <fieldset className="py-2">
+            <legend>Filter by Video Type</legend>
+            <div className="px-4">
+              <input type="radio" id="all-video-type" name="video-type" value="All" checked={videoType==='all'} onChange={() => VideoTypeChange('all')} />
+              <label className="px-2" htmlFor="all-video-type">All</label>
             </div>
-            )}
-          </div>
-        </fieldset>
+            <div className="px-4">
+              <input type="radio" id="custom-video-type" name="video-type" value="Custom" checked={videoType==='custom'} onChange={() => VideoTypeChange('custom')} />
+              <label className="px-2" htmlFor="custom-video-type">Custom</label>
+              {allVideoType.map((name) =>
+              <div key={name} className="px-4">
+                <input type="checkbox" id={name} name={name} checked={choosedVideoType.includes(name)} disabled={videoType==='all'} onChange={() => handleFilterVideoTypeChange(name)} />
+                <label className="px-2" htmlFor={name}>{name}</label>
+              </div>
+              )}
+            </div>
+          </fieldset>
+          <fieldset className="py-2">
+            <legend>Filter by Character</legend>
+            <div className="px-4">
+              <input type="radio" id="all-character" name="character" value="All" checked={character==='all'} onChange={() => CharacterChange('all')} />
+              <label className="px-2" htmlFor="all-character">All</label>
+            </div>
+            <div className="px-4">
+              <input type="radio" id="custom-character" name="character" value="Custom" checked={character==='custom'} onChange={() => CharacterChange('custom')} />
+              <label className="px-2" htmlFor="custom-type">Custom</label>
+              {allCharacter.map((name) =>
+              <div key={name} className="px-4">
+                <input type="checkbox" id={name} name={name} checked={choosedCharacter.includes(name)} disabled={character=='all'} onChange={() => handleFilterCharacterChange(name)} />
+                <label className="px-2" htmlFor={name}>{name}</label>
+              </div>
+              )}
+            </div>
+          </fieldset>
+          <fieldset className="py-2">
+            <legend>Filter by Engine</legend>
+            <div className="px-4">
+              <input type="radio" id="all-engine" name="engine" value="All" checked={engine==='all'} onChange={() => EngineChange('all')} />
+              <label className="px-2" htmlFor="all-engine">All</label>
+            </div>
+            <div className="px-4">
+              <input type="radio" id="custom-engine" name="engine" value="Custom" checked={engine==='custom'} onChange={() => EngineChange('custom')} />
+              <label className="px-2" htmlFor="custom-type">Custom</label>
+              {allEngine.map((name) =>
+              <div key={name} className="px-4">
+                <input type="checkbox" id={name} name={name} checked={choosedEngine.includes(name)} disabled={engine=='all'} onChange={() => handleFilterEngineChange(name)} />
+                <label className="px-2" htmlFor={name}>{name}</label>
+              </div>
+              )}
+            </div>
+          </fieldset>
+        </div>
+        <div className="grid mx-auto justify-items-center">
+          <button type="button" className="px-3 py-2 mb-4 bg-blue-500 text-white rounded shadow-md" onClick={handleApply}>Apply</button>
+        </div>
       </div>
       <div className="grid mx-auto justify-items-center">
-        <button type="button" className="px-3 py-2 mb-4 bg-blue-500 text-white rounded shadow-md" onClick={handleApply}>Apply</button>
+        <button type="button" className="px-3 py-2 mb-4 bg-slate-500 text-white rounded shadow-md" onClick={toggleOpen}>{buttonText}</button>
       </div>
     </div>
   );

@@ -10,12 +10,13 @@ function TopVideo() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    setIsLoaded(true);
     const params = {
       key: API_KEY,
       channelId: "UCG6CzweaohMczHNS5tfI4UA",
       order: "viewCount",
       type: "video",
-      maxResults: "10",
+      maxResults: "1",
     };
     const queryParams = new URLSearchParams(params);
 
@@ -24,16 +25,16 @@ function TopVideo() {
       .then((result) => {
         if (result.items && result.items.length !== 0) {
           setVideoId(result.items[0].id.videoId);
-          setIsLoaded(true);
+          setIsLoaded(false);
         }
       })
-      .catch((error) => {console.error(error);});
+      .catch((error) => {;});
   }, []);
 
   return (
     <div className="">
       <h5 className="text-xl text-center">Top Video (based on YouTube data)</h5>
-      {!isLoaded && <p>Now Loading...</p>}
+      {isLoaded && <p className="text-center">Now Loading...</p>}
       <div className="my-2 aspect-w-16 aspect-h-9">
         <iframe className=""
           id="player"

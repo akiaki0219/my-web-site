@@ -11,12 +11,30 @@ export async function fetchLatestVideo(): Promise<LatestVideoObject | null> {
       .lt('posted_at', new Date().toISOString())
       .limit(1);
     if (error) {
-      console.error('Error fetching video list', error);
       return null;
     }
     return data[0];
   } catch (error) {
-    console.error('Error fetching video list', error);
+    return null;
+  }
+}
+
+export async function fetchVideoList(order: 'latest' | 'oldest', filterType: string[], filterCharacter: string[], filterEngine: string[]): Promise<fetchVideoObject[] | null> {
+  try {
+    const {data, error} = await supabase
+      .from('video')
+      .select('id, YouTube, niconico, title, posted_at, number, type!inner(name), used!inner(character!inner(name), engine!inner(name))')
+      .eq('public', true)
+      .filter('type.name', 'in', `("${filterType.join('","')}")`)
+      .filter('used.character.name', 'in', `("${filterCharacter.join('","')}")`)
+      .filter('used.engine.name', 'in', `("${filterEngine.join('","')}")`)
+      .lt('posted_at', new Date().toISOString())
+      .order('id', {ascending: order==='oldest'});
+    if (error) {
+      return null;
+    }
+    return data;
+  } catch (error) {
     return null;
   }
 }
@@ -25,36 +43,15 @@ export async function fetchLatestAllVideoList(): Promise<fetchVideoObject[] | nu
   try {
     const {data, error} = await supabase
       .from('video')
-      .select('id, YouTube, niconico, title, posted_at, number, type(name), used(character(name), engine(name))')
+      .select('id, YouTube, niconico, title, posted_at, number, type!inner(name), used!inner(character!inner(name), engine!inner(name))')
       .eq('public', true)
       .order('id', {ascending: false})
       .lt('posted_at', new Date().toISOString());
     if (error) {
-      console.error('Error fetching video list', error);
       return null;
     }
     return data;
   } catch (error) {
-    console.error('Error fetching video list', error);
-    return null;
-  }
-}
-
-export async function fetchOldestAllVideoList(): Promise<fetchVideoObject[] | null> {
-  try {
-    const {data, error} = await supabase
-      .from('video')
-      .select('id, YouTube, niconico, title, posted_at, number, type(name), used(character(name), engine(name))')
-      .eq('public', true)
-      .order('id', {ascending: true})
-      .lt('posted_at', new Date().toISOString());
-    if (error) {
-      console.error('Error fetching video list', error);
-      return null;
-    }
-    return data;
-  } catch (error) {
-    console.error('Error fetching video list', error);
     return null;
   }
 }
