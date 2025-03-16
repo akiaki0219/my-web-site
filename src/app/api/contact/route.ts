@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     from: process.env.NEXT_PUBLIC_EMAIL_ADDRESS,
     to: process.env.NEXT_PUBLIC_EMAIL_ADDRESS,
     subject: subject,
-    text: `${body}\n\n---\nfrom: ${email}`,
+    text: `${body}\n\n------------------------------------------------------------\nfrom: ${email}`,
   }
 
   try {

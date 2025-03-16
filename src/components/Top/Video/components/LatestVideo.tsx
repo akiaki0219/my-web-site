@@ -30,7 +30,7 @@ function LatestVideo() {
         <iframe className=""
           id="player"
           title="LatestVideo"
-          src={latestVideo.YouTube ? `https://www.youtube.com/embed/${latestVideo.YouTube}` : `https://embed.nicovideo.jp/watch/sm${latestVideo.niconico}`}
+          src={latestVideo.YouTube ? `https://www.youtube.com/embed/${latestVideo.YouTube}` : `https://embed.nicovideo.jp/watch/${latestVideo.niconico}`}
           allowFullScreen
         />
       </div>

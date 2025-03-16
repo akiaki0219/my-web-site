@@ -47,7 +47,7 @@ function VideoPageItem({video}: StateVideoPageItem) {
             {video.niconico && 
             <div className="px-8 pb-2">
               <button className="px-2 py-2 bg-white text-black rounded shadow-md">
-                <a className="px-2" href={`https://nico.ms/sm${video.niconico}`}>niconico</a>
+                <a className="px-2" href={`https://nico.ms/${video.niconico}`}>niconico</a>
               </button>
             </div>
             }

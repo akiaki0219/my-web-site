@@ -9,7 +9,7 @@ function NicoVideoPlayer({niconico}: StatenicoVideoPlayer) {
         <iframe className="w-full h-full"
           id="player"
           title="niconico"
-          src={`https://embed.nicovideo.jp/watch/sm${niconico}`}
+          src={`https://embed.nicovideo.jp/watch/${niconico}`}
           allowFullScreen
           loading="lazy"
         />
