@@ -4,11 +4,11 @@ import React, {useState, useEffect} from 'react';
 import {fetchVideoTypeArray, fetchCharacterArray, fetchEngineArray} from 'utils/fetchVideoFilter';
 
 interface SortandFilterProps {
-  applySortFilter: (order: 'latest'|'oldest', filterType: string[], filterCharacter: string[], filterEngine: string[]) => void;
+  applySortFilter: (order: 'latest'|'oldest'|'mostView'|'mostLike'|'mostComment'|'mostMylist', filterType: string[], filterCharacter: string[], filterEngine: string[]) => void;
 }
 
 const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
-  const [order, setOrder] = useState<'latest' | 'oldest'>('latest');
+  const [order, setOrder] = useState<'latest' | 'oldest' | 'mostView' | 'mostLike' | 'mostComment' | 'mostMylist'>('latest');
   const [videoType, setVideoType] = useState<'all' | 'custom'>('all');
   const [allVideoType, setAllVideoType] = useState<string[]>([]);
   const [filterVideoType, setFilterVideoType] = useState<string[]>([]);
@@ -23,6 +23,7 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
   const [choosedEngine, setChoosedEngine] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [buttonText, setButtonText] = useState<'Open' | 'Close'>('Open');
+
   const toggleOpen = () => {
     setIsOpen(!isOpen);
     isOpen ? setButtonText('Open') : setButtonText('Close');
@@ -125,19 +126,36 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
       </div>
       <div className={`${isOpen ? 'md:block' : 'hidden'}`}>
         <div className="grid md:w-4/5 mx-auto grid-cols-2 md:grid-cols-4 justify-items-center">
-          <fieldset className="py-2">
-            <legend>Sort by Date</legend>
+          <fieldset>
+            <legend className="py-2">Sort by Date</legend>
             <div className="px-4">
               <input type="radio" id="latest" name="sort" value="Latest" checked={order==='latest'} onChange={() => setOrder('latest')} />
               <label className="px-2" htmlFor="latest">Latest</label>
             </div>
-            <div className="px-4">
+            <div className="px-4 pb-1">
               <input type="radio" id="oldest" name="sort" value="Oldest" checked={order==='oldest'} onChange={() => setOrder('oldest')} />
               <label className="px-2" htmlFor="oldest">Oldest</label>
             </div>
+            <legend className="py-2">Sort by Analytics</legend>
+            <div className="px-4">
+              <input type="radio" id="most-view" name="sort" value="MostView" checked={order==='mostView'} onChange={() => setOrder('mostView')} />
+              <label className="px-2" htmlFor="most-view">Most View</label>
+            </div>
+            <div className="px-4">
+              <input type="radio" id="most-like" name="sort" value="MostLike" checked={order==='mostLike'} onChange={() => setOrder('mostLike')} />
+              <label className="px-2" htmlFor="most-like">Most Like</label>
+            </div>
+            <div className="px-4">
+              <input type="radio" id="most-comment" name="sort" value="MostComment" checked={order==='mostComment'} onChange={() => setOrder('mostComment')} />
+              <label className="px-2" htmlFor="most-comment">Most Comment</label>
+            </div>
+            <div className="px-4">
+              <input type="radio" id="most-mylist" name="sort" value="MostMylist" checked={order==='mostMylist'} onChange={() => setOrder('mostMylist')} />
+              <label className="px-2" htmlFor="most-mylist">Most Mylist</label>
+            </div>
           </fieldset>
-          <fieldset className="py-2">
-            <legend>Filter by Video Type</legend>
+          <fieldset>
+            <legend className="py-2">Filter by Video Type</legend>
             <div className="px-4">
               <input type="radio" id="all-video-type" name="video-type" value="All" checked={videoType==='all'} onChange={() => VideoTypeChange('all')} />
               <label className="px-2" htmlFor="all-video-type">All</label>
@@ -153,15 +171,15 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
               )}
             </div>
           </fieldset>
-          <fieldset className="py-2">
-            <legend>Filter by Character</legend>
+          <fieldset>
+            <legend className="py-2">Filter by Character</legend>
             <div className="px-4">
               <input type="radio" id="all-character" name="character" value="All" checked={character==='all'} onChange={() => CharacterChange('all')} />
               <label className="px-2" htmlFor="all-character">All</label>
             </div>
             <div className="px-4">
               <input type="radio" id="custom-character" name="character" value="Custom" checked={character==='custom'} onChange={() => CharacterChange('custom')} />
-              <label className="px-2" htmlFor="custom-type">Custom</label>
+              <label className="px-2" htmlFor="custom-character">Custom</label>
               {allCharacter.map((name) =>
               <div key={name} className="px-4">
                 <input type="checkbox" id={name} name={name} checked={choosedCharacter.includes(name)} disabled={character=='all'} onChange={() => handleFilterCharacterChange(name)} />
@@ -178,7 +196,7 @@ const SortandFilter: React.FC<SortandFilterProps> = ({applySortFilter}) => {
             </div>
             <div className="px-4">
               <input type="radio" id="custom-engine" name="engine" value="Custom" checked={engine==='custom'} onChange={() => EngineChange('custom')} />
-              <label className="px-2" htmlFor="custom-type">Custom</label>
+              <label className="px-2" htmlFor="custom-engine">Custom</label>
               {allEngine.map((name) =>
               <div key={name} className="px-4">
                 <input type="checkbox" id={name} name={name} checked={choosedEngine.includes(name)} disabled={engine=='all'} onChange={() => handleFilterEngineChange(name)} />

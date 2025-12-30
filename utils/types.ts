@@ -1,4 +1,4 @@
-export type LatestVideoObject = {
+export type TopVideoObject = {
   id: number,
   YouTube: string,
   niconico: string
@@ -6,22 +6,10 @@ export type LatestVideoObject = {
 
 export type fetchVideoObject = {
   id: number,
-  type: {
-    name: string
-  }[],
   title: string,
   YouTube: string,
   niconico: string,
-  number: number,
   posted_at: Date,
-  used: {
-    character: {
-      name: string
-    }[],
-    engine: {
-      name: string
-    }[]
-  }[],
 };
 
 export type VideoObject = {
@@ -42,6 +30,13 @@ export type VideoObject = {
       name: string
     }
   }[],
+  YouTubeView: number,
+  niconicoView: number,
+  YouTubeLike: number,
+  niconicoLike: number,
+  YouTubeComment: number,
+  niconicoComment: number,
+  niconicoMylist: number
 };
 
 export type VideoType = {

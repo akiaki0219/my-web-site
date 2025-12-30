@@ -1,48 +1,43 @@
 'use client';
 
-import React, {useState, useEffect} from "react";
-
-const YOUTUBE_SEARCH_API_URL: string = process.env.NEXT_PUBLIC_YOUTUBE_SEARCH_API_URL! as string;
-const API_KEY: string = process.env.NEXT_PUBLIC_API_KEY! as string;
+import {fetchTopVideo} from 'utils/fetchVideo';
+import {TopVideoObject} from 'utils/types';
+import React, {useState, useEffect} from 'react';
 
 function TopVideo() {
-  const [videoId, setVideoId] = useState("");
+  const [latestVideo, setTopVideo] = useState<TopVideoObject>();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setIsLoaded(true);
-    const params = {
-      key: API_KEY,
-      channelId: "UCG6CzweaohMczHNS5tfI4UA",
-      order: "viewCount",
-      type: "video",
-      maxResults: "1",
+    const fetchVideo = async () => {
+      setIsLoaded(true);
+      const fetchVideo = await fetchTopVideo();
+      if (fetchVideo) {
+        const latestVideo = fetchVideo as unknown as TopVideoObject;
+        setTopVideo(latestVideo);
+        setIsLoaded(false);
+      }
+      else {
+        setIsLoaded(false);
+      }
     };
-    const queryParams = new URLSearchParams(params);
-
-    fetch(YOUTUBE_SEARCH_API_URL + queryParams)
-      .then((result) => result.json())
-      .then((result) => {
-        if (result.items && result.items.length !== 0) {
-          setVideoId(result.items[0].id.videoId);
-          setIsLoaded(false);
-        }
-      })
-      .catch((error) => {;});
+    fetchVideo();
   }, []);
 
   return (
     <div className="">
-      <h5 className="text-xl text-center">Top Video (based on YouTube data)</h5>
+      <h5 className="text-xl text-center">Top Video</h5>
       {isLoaded && <p className="text-center">Now Loading...</p>}
+      {latestVideo &&
       <div className="my-2 aspect-w-16 aspect-h-9">
         <iframe className=""
           id="player"
           title="TopVideo"
-          src={"https://www.youtube.com/embed/"+videoId}
+          src={latestVideo.YouTube ? `https://www.youtube.com/embed/${latestVideo.YouTube}` : `https://embed.nicovideo.jp/watch/${latestVideo.niconico}`}
           allowFullScreen
         />
       </div>
+      }
     </div>
   );
 };

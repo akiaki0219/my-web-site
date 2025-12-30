@@ -32,10 +32,32 @@ function VideoPageItem({video}: StateVideoPageItem) {
           <h3>Posted: {video.posted_at.toString()}</h3>
           <div className="flex pb-4">
             <h3 className="">Character: </h3>
-            <div className="px-4">
+            <div className="px-1">
               {video.used.map((number, index) => <h3 key={index}>{number.character.name} ({number.engine.name})</h3>)}
             </div>
           </div>
+          <div className="flex">
+            <h3 className="">View: </h3>
+            <div className="px-1">
+              <h3 className="">{video.YouTubeView+video.niconicoView} views</h3>
+              <h3 className="">(YouTube: {video.YouTubeView}, niconico: {video.niconicoView})</h3>
+            </div>
+          </div>
+          <div className="flex">
+            <h3 className="">Like: </h3>
+            <div className="px-1">
+              <h3 className="">{video.YouTubeLike+video.niconicoLike} likes</h3>
+              <h3 className="">(YouTube: {video.YouTubeLike}, niconico: {video.niconicoLike})</h3>
+            </div>
+          </div>
+          <div className="flex">
+            <h3 className="">Comment: </h3>
+            <div className="px-1">
+              <h3 className="">{video.YouTubeComment+video.niconicoComment} comments</h3>
+              <h3 className="">(YouTube: {video.YouTubeComment}, niconico: {video.niconicoComment})</h3>
+            </div>
+          </div>
+          <h3 className="pb-4">Mylist: {video.niconicoMylist}</h3>
           <div className="flex">
             {video.YouTube && 
               <div className="px-8 pb-2">

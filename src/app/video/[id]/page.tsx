@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import {fetchLatestAllVideoList} from 'utils/fetchVideo';
+import {fetchSelectedVideo} from 'utils/fetchVideo';
 import {VideoObject} from 'utils/types';
 import {useState, useEffect} from 'react';
 import {useParams} from 'next/navigation';
@@ -14,25 +14,27 @@ type Params = {
 function VideoPage() {
   const {id} = useParams<Params>();
   const [Video, setVideo] = useState<VideoObject | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
 
   useEffect(() => {
     const fetchVideo = async () => {
-      const fetchVideoList = await fetchLatestAllVideoList();
-      const videoList = fetchVideoList as unknown as VideoObject[];
-      if (videoList) {
-        const selectedVideo = videoList.find((video) => video.id===Number(id));
-        setVideo(selectedVideo || null);
-        setIsLoaded(true);
+      setIsLoaded(true);
+      const fetchVideo = await fetchSelectedVideo(Number(id));
+      if (fetchVideo) {
+        const selectedVideo = fetchVideo as unknown as VideoObject;
+        setVideo(selectedVideo);
       }
+      setIsLoaded(false);
     };
     fetchVideo();
   }, [id]);
 
   return (
     <div className="mx-auto">
-      {Video? (
-        <VideoPageItem video={Video} key={Video.id}/>
+      {isLoaded ? (
+        <h2 className="text-center my-4">Now Loading...</h2>
+      ) : Video ? (
+        <VideoPageItem video={Video} key={Video.id} />
       ) : (
         <h2 className="text-center my-4">There is No Video</h2>
       )}

@@ -1,11 +1,11 @@
 'use client';
 
 import {fetchLatestVideo} from 'utils/fetchVideo';
-import {LatestVideoObject} from 'utils/types';
+import {TopVideoObject} from 'utils/types';
 import React, {useState, useEffect} from 'react';
 
 function LatestVideo() {
-  const [latestVideo, setLatestVideo] = useState<LatestVideoObject>();
+  const [latestVideo, setLatestVideo] = useState<TopVideoObject>();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function LatestVideo() {
       setIsLoaded(true);
       const fetchVideo = await fetchLatestVideo();
       if (fetchVideo) {
-        const latestVideo = fetchVideo as unknown as LatestVideoObject;
+        const latestVideo = fetchVideo as unknown as TopVideoObject;
         setLatestVideo(latestVideo);
         setIsLoaded(false);
       }
