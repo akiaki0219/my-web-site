@@ -1,13 +1,13 @@
 'use client';
 
 import {fetchVideoList, fetchLatestAllVideoList} from 'utils/fetchVideo';
-import {VideoObject} from 'utils/types';
+import {fetchVideoObject, VideoObject} from 'utils/types';
 import {useState, useEffect} from 'react';
 import SortandFilter from './components/SortAndFilter';
 import VideoList from './components/VideoList';
 
 function Video() {
-  const [videoList, setVideoList] = useState<VideoObject[]>([]);
+  const [videoList, setVideoList] = useState<fetchVideoObject[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function Video() {
       setIsLoaded(true);
       const fetchVideoList = await fetchLatestAllVideoList();
       if (fetchVideoList) {
-        const videoList = fetchVideoList as unknown as VideoObject[];
+        const videoList = fetchVideoList;
         setVideoList(videoList);
         setIsLoaded(false);
       }
@@ -30,7 +30,7 @@ function Video() {
   const applySortFilter = async (order: 'latest'|'oldest'|'mostView'|'mostLike'|'mostComment'|'mostMylist', filterType: string[], filterCharacter: string[], filterEngine: string[]) => {
     setIsLoaded(true);
     const fetchNewVideoList = await fetchVideoList(order, filterType, filterCharacter, filterEngine);
-    let NewVideoList = fetchNewVideoList as unknown as VideoObject[];
+    let NewVideoList = fetchNewVideoList;
     if (NewVideoList) {
       setVideoList(NewVideoList);
       setIsLoaded(false);

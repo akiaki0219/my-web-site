@@ -21,7 +21,7 @@ function VideoPage() {
       setIsLoaded(true);
       const fetchVideo = await fetchSelectedVideo(Number(id));
       if (fetchVideo) {
-        const selectedVideo = fetchVideo as unknown as VideoObject;
+        const selectedVideo = fetchVideo;
         setVideo(selectedVideo);
       }
       setIsLoaded(false);

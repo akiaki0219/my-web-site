@@ -12,7 +12,7 @@ export type fetchVideoObject = {
   posted_at: Date,
 };
 
-export type VideoObject = {
+export type rawVideoObject = {
   id: number,
   type: {
     name: string
@@ -29,6 +29,27 @@ export type VideoObject = {
     engine: {
       name: string
     }
+  }[],
+  YouTubeView: number,
+  niconicoView: number,
+  YouTubeLike: number,
+  niconicoLike: number,
+  YouTubeComment: number,
+  niconicoComment: number,
+  niconicoMylist: number
+};
+
+export type VideoObject = {
+  id: number,
+  type: string,
+  title: string,
+  YouTube: string,
+  niconico: string,
+  number: number,
+  posted_at: Date,
+  used: {
+    character: string,
+    engine: string
   }[],
   YouTubeView: number,
   niconicoView: number,

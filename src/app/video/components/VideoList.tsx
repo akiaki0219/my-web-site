@@ -1,8 +1,8 @@
 import VideoItem from './VideoItem';
-import {VideoObject} from 'utils/types';
+import {fetchVideoObject} from 'utils/types';
 
 interface VideoListProps {
-  videos: VideoObject[];
+  videos: fetchVideoObject[];
 }
 interface IsLoadedProps {
   isLoaded: boolean;

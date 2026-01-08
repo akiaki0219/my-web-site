@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import {VideoObject} from 'utils/types';
+import {fetchVideoObject} from 'utils/types';
 import YouTubePlayer from './YouTubePlayer';
 import NicoVideoPlayer from './NicoVideoPlayer';
 
 type StateVideoItem = {
-  video: VideoObject;
+  video: fetchVideoObject;
 }
 
 function VideoItem({video}: StateVideoItem) {

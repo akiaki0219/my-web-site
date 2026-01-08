@@ -13,7 +13,7 @@ function TopVideo() {
       setIsLoaded(true);
       const fetchVideo = await fetchTopVideo();
       if (fetchVideo) {
-        const latestVideo = fetchVideo as unknown as TopVideoObject;
+        const latestVideo = fetchVideo;
         setTopVideo(latestVideo);
         setIsLoaded(false);
       }

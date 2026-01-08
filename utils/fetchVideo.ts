@@ -1,5 +1,5 @@
 import supabase from './supabaseClient';
-import {VideoObject, fetchVideoObject, TopVideoObject} from './types';
+import {VideoObject, fetchVideoObject, TopVideoObject, rawVideoObject} from './types';
 
 export async function fetchSelectedVideo(id: number): Promise<VideoObject | null> {
   try {
@@ -9,12 +9,35 @@ export async function fetchSelectedVideo(id: number): Promise<VideoObject | null
       .eq('public', true)
       .eq('id', id)
       .limit(1);
-    console.log(data);
     if (error) {
       return null;
     }
-    return data[0];
+    console.log(data)
+    const raw = data[0] as unknown as rawVideoObject;
+    const video: VideoObject = {
+      id: raw.id,
+      YouTube: raw.YouTube,
+      niconico: raw.niconico,
+      title: raw.title,
+      posted_at: raw.posted_at,
+      number: raw.number,
+      type: raw.type.name,
+      used: raw.used.map(u => ({
+        character: u.character.name,
+        engine: u.engine.name,
+      })),
+      YouTubeView: raw.YouTubeView,
+      niconicoView: raw.niconicoView,
+      YouTubeLike: raw.YouTubeLike,
+      niconicoLike: raw.niconicoLike,
+      YouTubeComment: raw.YouTubeComment,
+      niconicoComment: raw.niconicoComment,
+      niconicoMylist: raw.niconicoMylist
+    };
+    console.log(video);
+    return video;
   } catch (error) {
+    console.log(error);
     return null;
   }
 }
@@ -28,7 +51,6 @@ export async function fetchLatestVideo(): Promise<TopVideoObject | null> {
       .order('id', {ascending: false})
       .lt('posted_at', new Date().toISOString())
       .limit(1);
-    console.log(data);
     if (error) {
       return null;
     }
@@ -41,12 +63,11 @@ export async function fetchLatestVideo(): Promise<TopVideoObject | null> {
 export async function fetchTopVideo(): Promise<TopVideoObject | null> {
   try {
     const {data, error} = await supabase
-      .from('video_with_totalview')
+      .from('video_with_totalanalytics')
       .select('id, YouTube, niconico')
       .eq('public', true)
       .order('totalView', {ascending: false})
       .limit(1);
-    console.log(data);
     if (error) {
       return null;
     }
@@ -61,7 +82,7 @@ export async function fetchVideoList(order: 'latest'|'oldest'|'mostView'|'mostLi
     let query; 
     if (order === 'mostView') {
       query = supabase
-        .from('video_with_totalview')
+        .from('video_with_totalanalytics')
         .select('id, YouTube, niconico, title, posted_at, number, type!inner(name), used!inner(character!inner(name), engine!inner(name))')
         .eq('public', true)
         .filter('type.name', 'in', `("${filterType.join('","')}")`)
@@ -72,7 +93,7 @@ export async function fetchVideoList(order: 'latest'|'oldest'|'mostView'|'mostLi
     }
     else if (order === 'mostLike') {
       query = supabase
-        .from('video_with_totallike')
+        .from('video_with_totalanalytics')
         .select('id, YouTube, niconico, title, posted_at, number, type!inner(name), used!inner(character!inner(name), engine!inner(name))')
         .eq('public', true)
         .filter('type.name', 'in', `("${filterType.join('","')}")`)
@@ -83,7 +104,7 @@ export async function fetchVideoList(order: 'latest'|'oldest'|'mostView'|'mostLi
     }
     else if (order === 'mostComment') {
       query = supabase
-        .from('video_with_totalcomment')
+        .from('video_with_totalanalytics')
         .select('id, YouTube, niconico, title, posted_at, number, type!inner(name), used!inner(character!inner(name), engine!inner(name))')
         .eq('public', true)
         .filter('type.name', 'in', `("${filterType.join('","')}")`)
@@ -115,11 +136,10 @@ export async function fetchVideoList(order: 'latest'|'oldest'|'mostView'|'mostLi
         .order('id', {ascending: order==='oldest'});
     }
     const {data, error} = await query;
-    console.log(data);
     if (error) {
-      console.log(error);
       return null;
     }
+    console.log(data);
     return data;
   } catch (error) {
     return null;
@@ -134,7 +154,6 @@ export async function fetchLatestAllVideoList(): Promise<fetchVideoObject[] | nu
       .eq('public', true)
       .order('id', {ascending: false})
       .lt('posted_at', new Date().toISOString());
-    console.log(data);
     if (error) {
       return null;
     }
